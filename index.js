@@ -20,6 +20,18 @@ app.get("/users", function (req, res) {
   });
 });
 
+app.get('/users/:userId',(req, res)=>{
+    const {userId} = req.params;
+    console.log( {userId});
+    res.send('ok userId')
+})
+app.get('/users/:userId/:something?',(req, res)=>{
+    //something optional
+    const {userId,something} = req.params;
+    console.log( {userId,something});
+    res.send('ok userId , something')
+})
+
 app.listen(3000, () => {
   console.log("server run on port 3000");
 });
