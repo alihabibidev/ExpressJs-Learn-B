@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "match": "nodemon mached-routes.js"
+    "match": "nodemon mached-routes.js",
+    "query": "nodemon query.js"
   },
   "keywords": [],
   "author": "",
