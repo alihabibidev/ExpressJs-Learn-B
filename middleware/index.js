@@ -1,10 +1,15 @@
 const express = require('express');
 const queryString = require('querystring');
+const morgan = require('morgan');
 const app = express();
+
+
+
+app.use(morgan('combined'))
 
 // body parser - middleware
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
 
 
 
