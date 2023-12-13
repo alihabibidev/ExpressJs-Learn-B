@@ -1,12 +1,20 @@
 const express = require('express');
 const queryString = require('querystring');
 const morgan = require('morgan');
+const omitEmpty = require('omit-empty');
 // const { default: camelCase } = require('camelcase-keys');
 const camelCaseKey = (...args) =>
     import('camelcase-keys').then(({ default: camelCaseKeys }) => camelCaseKeys(...args));
 const app = express();
 
 app.use(morgan('combined'));
+
+function removeEmptyFields(options = {}) {
+    return function (req, res, next) {
+        req.body = omitEmpty(req.body, options);
+        next();
+    };
+}
 
 async function camelCase(req, res, next) {
     req.body = await camelCaseKey(req.body, { deep: true });
@@ -83,7 +91,9 @@ app.get('/blogs', async (req, res) => {
     });
 });
 
-
+app.post('/create', removeEmptyFields(), (req, res, next) => {
+    res.send(req.body);
+});
 
 
 app.listen(3000, () => {
