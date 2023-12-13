@@ -1,24 +1,16 @@
-const express = require('express');
-
-app.use((req, res, next) => {
-    return res.status(404).json({
-        statusCode: res.statusCode,
-        error: {
-            type: 'NotFound',
-            message: 'not found ' + req.url + ' route',
-        },
-    });
-});
-
-app.use((err, req, res, next) => {
-    return res.json({
-        statusCode: err.status || 500,
-        error: {
-            message: err.message || 'internalServerError',
-        },
-    });
-});
-
+const express = require("express");
+const path = require("path")
+const { NotFoundError, ErrorHandler } = require("./util/errorHandler");
+const app = express();
+app.use(express.static("public"))
+app.set("view engine", "ejs")
+app.get("/", (req, res, next) => {
+    const h1 = "<h1>h1</h1>";
+    const blogs = require("./blogs.json")
+    res.render("index", {h1, blogs, blogTitle: "Ejs Blogs"})
+})
+app.use(NotFoundError);
+app.use(ErrorHandler);
 app.listen(3000, () => {
-    console.log('server run on port 3000');
-});
+    console.log("server run on port 3000");
+})
