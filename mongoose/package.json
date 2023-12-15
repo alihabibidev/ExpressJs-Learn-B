@@ -13,5 +13,8 @@
     "express": "^4.18.2",
     "mongoose": "^6.9.1",
     "omit-empty": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
